@@ -1,5 +1,6 @@
 package com.YiLuLearner.mapper;
 import com.YiLuLearner.pojo.Emp;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import java.util.List;
@@ -15,4 +16,8 @@ public interface EmpMapper {
 
     //批量删除
     void delete(List<Integer> ids);
+    //新增员工
+    @Insert("insert into practice.emp (username, name, gender, image, job, entrydate, dept_id, create_time, update_time) " +
+            "values (#{username}, #{name}, #{gender}, #{image}, #{job}, #{entrydate}, #{deptId}, #{createTime}, #{updateTime});")
+    void insert(Emp emp);
 }

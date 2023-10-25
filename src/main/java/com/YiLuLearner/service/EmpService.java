@@ -1,5 +1,6 @@
 package com.YiLuLearner.service;
 
+import com.YiLuLearner.pojo.Emp;
 import com.YiLuLearner.pojo.PageBean;
 
 import java.util.List;
@@ -17,4 +18,5 @@ public interface EmpService {
      * @param ids id集合
      */
     void delete(List<Integer> ids);
+    void save(Emp emp);
 }
