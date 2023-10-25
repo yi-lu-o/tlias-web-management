@@ -38,4 +38,18 @@ public class EmpController {
         //响应
         return Result.success();
     }
+
+    //根据id查询
+    @GetMapping("/{id}")
+    public Result getById(@PathVariable Integer id){
+        Emp emp = empService.getById(id);
+        return Result.success(emp);
+    }
+
+    //修改员工
+    @PutMapping
+    public Result update(@RequestBody Emp emp){
+        empService.update(emp);
+        return Result.success();
+    }
 }

@@ -1,20 +1,22 @@
 package com.YiLuLearner.utils;
 
+import com.YiLuLearner.pojo.AliOSSProperties;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
 
-@Component
+@Component //当前类对象由Spring创建和管理
 public class AliOSSUtils {
-    private String endpoint = "https://oss-cn-beijing.aliyuncs.com";
-    private String accessKeyId = "LTAI5tMA9UmFkFgP5UJCCWc4";
-    private String accessKeySecret = "FfRQ6ILXCfF3DGKQBNu1RHWOPrAt8Y";
-    private String bucketName = "study-web-001";
+
+    //注入配置参数实体类对象
+    @Autowired
+    private AliOSSProperties aliOSSProperties;
+
 
     /**
      * 实现上传图片到OSS
@@ -28,11 +30,12 @@ public class AliOSSUtils {
         String fileName = UUID.randomUUID().toString() + originalFilename.substring(originalFilename.lastIndexOf("."));
 
         //上传文件到 OSS
-        OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
-        ossClient.putObject(bucketName, fileName, inputStream);
+        OSS ossClient = new OSSClientBuilder().build(aliOSSProperties.getEndpoint(),
+                aliOSSProperties.getAccessKeyId(), aliOSSProperties.getAccessKeySecret());
+        ossClient.putObject(aliOSSProperties.getBucketName(), fileName, inputStream);
 
         //文件访问路径
-        String url = endpoint.split("//")[0] + "//" + bucketName + "." + endpoint.split("//")[1] + "/" + fileName;
+        String url =aliOSSProperties.getEndpoint().split("//")[0] + "//" + aliOSSProperties.getBucketName() + "." + aliOSSProperties.getEndpoint().split("//")[1] + "/" + fileName;
 
         // 关闭ossClient
         ossClient.shutdown();
