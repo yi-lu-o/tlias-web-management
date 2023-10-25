@@ -31,4 +31,10 @@ public interface EmpService {
      * @param emp
      */
     public void update(Emp emp);
+    /**
+     * 用户登录
+     * @param emp
+     * @return
+     */
+    public Emp login(Emp emp);
 }
